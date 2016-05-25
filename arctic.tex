@@ -1,6 +1,33 @@
 % Ian Dennis Miller
 % Arctic (R-TeX) data bridge
 % LaTeX reporting utilities
+% http://github.com/iandennismiller/arctic
+
+\usepackage{amsmath}
+\usepackage{ifthen}
+
+\usepackage{pgfkeys}
+\newcommand{\setvalue}[1]{\pgfkeys{/variables, #1}}
+\newcommand{\getvalue}[1]{\pgfkeysvalueof{/variables/#1}}
+\newcommand{\declare}[1]{%
+ \pgfkeys{
+  /variables/#1.is family,
+  /variables/#1.unknown/.style = {\pgfkeyscurrentpath/\pgfkeyscurrentname/.initial = ##1}
+ }%
+}
+\declare{}
+
+\usepackage{siunitx}
+\sisetup{
+	round-mode = places,
+	round-precision = 3,
+	round-minimum = 0.01,
+	round-half = even,
+    group-digits=true,
+    group-separator={},
+}
+
+% reporting utilities
 
 % print p-value
 \newcommand{\printPvalue}[1]{\ifthenelse{\equal{#1}{0.00000000}}{$p < 0.001$}{$p = \num{#1}$}}
